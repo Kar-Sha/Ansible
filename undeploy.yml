@@ -1,0 +1,23 @@
+- name: Un-deploy Web Servers (Cleanup)
+  hosts: webservers
+  become: yes
+  vars:
+    web_port: 8080
+  tasks:
+    - name: Stop and Disable Apache Service
+      service:
+        name: apache2
+        state: stopped
+        enabled: no
+
+    - name: Remove Apache Package
+      package:
+        name: apache2
+        state: absent
+
+    - name: Remove Web Page
+      file:
+        path: /var/www/html/index.html
+        state: absent
+
+   
